@@ -1,0 +1,16 @@
+version: '3'
+services:
+  inheritance-in-jpa-db:
+    container_name: inheritance-in-jpa-db
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=InheritanceInJPA
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - "3307:3306"
+    volumes:
+      - inheritance-in-jpa-data:/var/lib/mysql
+
+volumes:
+  inheritance-in-jpa-data:
