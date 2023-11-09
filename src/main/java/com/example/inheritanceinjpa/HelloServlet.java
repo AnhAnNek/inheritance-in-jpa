@@ -1,7 +1,11 @@
 package com.example.inheritanceinjpa;
 
+import com.example.inheritanceinjpa.builder.keyboard.KeyboardBuilder;
+import com.example.inheritanceinjpa.builder.keyboard.KeyboardBuilderImpl;
 import com.example.inheritanceinjpa.builder.laptop.LaptopBuilder;
 import com.example.inheritanceinjpa.builder.laptop.LaptopBuilderImpl;
+import com.example.inheritanceinjpa.builder.monitor.MonitorBuilder;
+import com.example.inheritanceinjpa.builder.monitor.MonitorBuilderImpl;
 import com.example.inheritanceinjpa.customenum.ECategory;
 import com.example.inheritanceinjpa.entity.Laptop;
 import com.example.inheritanceinjpa.entity.MechanicalKeyboard;
@@ -44,28 +48,21 @@ public class HelloServlet extends HttpServlet {
 
         saveMonitor(out);
 
-        getProductById(out);
+        saveKeyboard(out);
+
+//        getProductById(out);
 
         getByPriceRange(out);
     }
 
     private void saveLaptop(PrintWriter out) {
         Laptop laptop = laptopBuilder();
-        out.println(laptop.toString() + "</br>");
-
-        Product saved = prodRepos.save(laptop);
-        String str = saved.toString();
-        if (str != null || !str.isEmpty()) {
-            existProdId = saved.getId();
-            out.println(str);
-        } else {
-            out.println("Save unsuccessfully");
-        }
+        saveProd(out, laptop);
     }
 
     private Laptop laptopBuilder() {
         LaptopBuilder builder = new LaptopBuilderImpl();
-        builder
+        return builder
                 .cpuName("Intel Core i5")
                 .cpuCores(4)
                 .cpuThreads(8)
@@ -97,23 +94,13 @@ public class HelloServlet extends HttpServlet {
                 .version("1.0")
                 .color("Silver")
                 .category(ECategory.LAPTOP)
-                .releaseYear(2022);
-        Laptop laptop = builder.build();
-        builder = null;
-        return laptop;
+                .releaseYear(2022)
+                .build();
     }
 
     private void saveMonitor(PrintWriter out) {
         Monitor monitor = monitorBuilder();
-        out.println(monitor.toString() + "</br>");
-
-        Product saved = prodRepos.save(monitor);
-        String str = saved.toString();
-        if (str != null || !str.isEmpty()) {
-            out.println(str);
-        } else {
-            out.println("Save unsuccessfully");
-        }
+        saveProd(out, monitor);
     }
 
     Monitor monitorBuilder() {
@@ -121,11 +108,83 @@ public class HelloServlet extends HttpServlet {
         connections.add(Monitor.EConnection.HDMI);
         connections.add(Monitor.EConnection.USB_C);
 
+        MonitorBuilder builder = new MonitorBuilderImpl();
+        return builder
+                .screenSize(27.0)
+                .resolution("1920x1080")
+                .touchScreen(true)
+                .panelType(Monitor.EPanel.IPS)
+                .refreshRate(144)
+                .eyeCareTechnology(true)
+                .brightness(250)
+                .hdrSupported(true)
+                .builtInSpeakers(true)
+                .powerConsumption(50.5)
+                .weight(7.2)
+                .connections(connections)
+                .brand("BrandName")
+                .model("Model123")
+                .desc("Description of the monitor")
+                .price(new BigDecimal("299.99"))
+                .stockQty(50)
+                .discountPercent(0.1)
+                .version("Version2")
+                .color("Black")
+                .category(ECategory.MONITOR)
+                .releaseYear(2023)
+                .build();
+    }
 
-        return new Monitor("BrandName", "Model123", "Description of the monitor",
-                new BigDecimal("299.99"), 50, 0.1, "Version2", "Black", ECategory.MONITOR, 2023,
-                27.0, "1920x1080", true, Monitor.EPanel.IPS, 144, true, 250, true, true,
-                50.5, 7.2, connections);
+    private void saveKeyboard(PrintWriter out) {
+        MechanicalKeyboard keyboard = keyboardBuilder();
+        saveProd(out, keyboard);
+    }
+
+    private MechanicalKeyboard keyboardBuilder() {
+        Set<MechanicalKeyboard.ECompatibility> compatibilities = new HashSet<>();
+        compatibilities.add(MechanicalKeyboard.ECompatibility.WINDOWS);
+        compatibilities.add(MechanicalKeyboard.ECompatibility.MAC_OS);
+        compatibilities.add(MechanicalKeyboard.ECompatibility.LINUX);
+
+        Set<MechanicalKeyboard.EConnection> connections = new HashSet<>();
+        connections.add(MechanicalKeyboard.EConnection.USB_RECEIVER);
+        connections.add(MechanicalKeyboard.EConnection.BLUETOOTH);
+        connections.add(MechanicalKeyboard.EConnection.WIRED);
+
+
+        KeyboardBuilder builder = new KeyboardBuilderImpl();
+        return builder
+                .compatibilities(compatibilities)
+                .connections(connections)
+                .cableLength("1.8m")
+                .switchType("Cherry MX Red")
+                .layout(MechanicalKeyboard.ELayout.FULL_SIZE)
+                .keyCount(104)
+                .keycapMaterial("ABS")
+                .batteryType("AA")
+                .brand("BrandName")
+                .model("Model123")
+                .desc("Description of the keyboard")
+                .price(new BigDecimal("99.99"))
+                .stockQty(50)
+                .discountPercent(0.05)
+                .version("Version2")
+                .color("Black")
+                .category(ECategory.MECHANICAL_KEYBOARD)
+                .releaseYear(2023)
+                .build();
+    }
+
+    private void saveProd(PrintWriter out, Product prod) {
+        out.println(prod.toString() + "</br>");
+
+        Product saved = prodRepos.save(prod);
+        String str = saved.toString();
+        if (str != null) {
+            out.println(str);
+        } else {
+            out.println("Save unsuccessfully");
+        }
     }
 
     void getProductById(PrintWriter out) {

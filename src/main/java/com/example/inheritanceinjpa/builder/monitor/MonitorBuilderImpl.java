@@ -5,7 +5,7 @@ import com.example.inheritanceinjpa.entity.Monitor;
 
 import java.util.Set;
 
-public class MonitorBuilderImpl extends ProductBuilderImpl<Monitor> implements MonitorBuilder {
+public class MonitorBuilderImpl extends MonitorBuilder {
 
     public MonitorBuilderImpl() {
         prod = new Monitor();

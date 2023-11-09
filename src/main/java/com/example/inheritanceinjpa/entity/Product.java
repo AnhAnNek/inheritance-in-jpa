@@ -205,4 +205,12 @@ public abstract class Product {
     public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
 }

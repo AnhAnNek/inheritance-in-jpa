@@ -1,30 +1,29 @@
 package com.example.inheritanceinjpa.builder.laptop;
 
-import com.example.inheritanceinjpa.builder.prod.ProductBuilder;
 import com.example.inheritanceinjpa.builder.prod.ProductBuilderImpl;
 import com.example.inheritanceinjpa.entity.Laptop;
 
-public interface LaptopBuilder extends ProductBuilder<Laptop> {
-    LaptopBuilder cpuName(String cpuName);
-    LaptopBuilder cpuCores(int cpuCores);
-    LaptopBuilder cpuThreads(int cpuThreads);
-    LaptopBuilder cpuSpeed(double cpuSpeed);
-    LaptopBuilder cpuMaxSpeed(double cpuMaxSpeed);
-    LaptopBuilder cpuCache(int cpuCache);
-    LaptopBuilder ramSize(int ramSize);
-    LaptopBuilder ramType(Laptop.ERam ramType);
-    LaptopBuilder ramBusSpeed(int ramBusSpeed);
-    LaptopBuilder ramMaxSupport(int ramMaxSupport);
-    LaptopBuilder romType(Laptop.ERom romType);
-    LaptopBuilder romSize(int romSize);
-    LaptopBuilder screenSize(double screenSize);
-    LaptopBuilder screenResolution(String screenResolution);
-    LaptopBuilder screenRefreshRate(int screenRefreshRate);
-    LaptopBuilder screenTechnology(String screenTechnology);
-    LaptopBuilder brightness(int brightness);
-    LaptopBuilder antiGlare(boolean antiGlare);
-    LaptopBuilder graphicsCard(String graphicsCard);
-    LaptopBuilder weight(double weight);
-    LaptopBuilder material(String material);
-    LaptopBuilder operatingSystem(String operatingSystem);
+public abstract class LaptopBuilder extends ProductBuilderImpl<Laptop> {
+    public abstract LaptopBuilder cpuName(String cpuName);
+    public abstract LaptopBuilder cpuCores(int cpuCores);
+    public abstract LaptopBuilder cpuThreads(int cpuThreads);
+    public abstract LaptopBuilder cpuSpeed(double cpuSpeed);
+    public abstract LaptopBuilder cpuMaxSpeed(double cpuMaxSpeed);
+    public abstract LaptopBuilder cpuCache(int cpuCache);
+    public abstract LaptopBuilder ramSize(int ramSize);
+    public abstract LaptopBuilder ramType(Laptop.ERam ramType);
+    public abstract LaptopBuilder ramBusSpeed(int ramBusSpeed);
+    public abstract LaptopBuilder ramMaxSupport(int ramMaxSupport);
+    public abstract LaptopBuilder romType(Laptop.ERom romType);
+    public abstract LaptopBuilder romSize(int romSize);
+    public abstract LaptopBuilder screenSize(double screenSize);
+    public abstract LaptopBuilder screenResolution(String screenResolution);
+    public abstract LaptopBuilder screenRefreshRate(int screenRefreshRate);
+    public abstract LaptopBuilder screenTechnology(String screenTechnology);
+    public abstract LaptopBuilder brightness(int brightness);
+    public abstract LaptopBuilder antiGlare(boolean antiGlare);
+    public abstract LaptopBuilder graphicsCard(String graphicsCard);
+    public abstract LaptopBuilder weight(double weight);
+    public abstract LaptopBuilder material(String material);
+    public abstract LaptopBuilder operatingSystem(String operatingSystem);
 }

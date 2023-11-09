@@ -31,12 +31,12 @@ public class MechanicalKeyboard extends Product {
     }
 
     @ElementCollection(fetch = FetchType.EAGER, targetClass = ECompatibility.class)
-    @CollectionTable(name = "keyboard_compatibilities", joinColumns = @JoinColumn(name = "keyboard_id"))
+    @CollectionTable(name = "keyboard_compatibilities", joinColumns = @JoinColumn(name = "keyboard_comp_id"))
     @Enumerated(EnumType.STRING)
     private Set<ECompatibility> compatibilities;
 
     @ElementCollection(fetch = FetchType.EAGER, targetClass = EConnection.class)
-    @CollectionTable(name = "keyboard_connections", joinColumns = @JoinColumn(name = "keyboard_id"))
+    @CollectionTable(name = "keyboard_connections", joinColumns = @JoinColumn(name = "keyboard_conn_id"))
     @Enumerated(EnumType.STRING)
     private Set<EConnection> connections;
 

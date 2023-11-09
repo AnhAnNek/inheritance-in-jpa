@@ -1,11 +1,10 @@
 package com.example.inheritanceinjpa.builder.keyboard;
 
-import com.example.inheritanceinjpa.builder.prod.ProductBuilderImpl;
 import com.example.inheritanceinjpa.entity.MechanicalKeyboard;
 
 import java.util.Set;
 
-public class KeyboardBuilderImpl extends ProductBuilderImpl<MechanicalKeyboard> implements KeyboardBuilder {
+public class KeyboardBuilderImpl extends KeyboardBuilder {
 
     public KeyboardBuilderImpl() {
         prod = new MechanicalKeyboard();
