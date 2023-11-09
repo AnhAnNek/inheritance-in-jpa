@@ -1,0 +1,66 @@
+package com.example.inheritanceinjpa.builder.keyboard;
+
+import com.example.inheritanceinjpa.builder.prod.ProductBuilderImpl;
+import com.example.inheritanceinjpa.entity.MechanicalKeyboard;
+
+import java.util.Set;
+
+public class KeyboardBuilderImpl extends ProductBuilderImpl<MechanicalKeyboard> implements KeyboardBuilder {
+
+    public KeyboardBuilderImpl() {
+        prod = new MechanicalKeyboard();
+    }
+
+    @Override
+    public KeyboardBuilder compatibilities(Set<MechanicalKeyboard.ECompatibility> compatibilities) {
+        prod.setCompatibilities(compatibilities);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder connections(Set<MechanicalKeyboard.EConnection> connections) {
+        prod.setConnections(connections);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder cableLength(String cableLength) {
+        prod.setCableLength(cableLength);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder switchType(String switchType) {
+        prod.setSwitchType(switchType);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder layout(MechanicalKeyboard.ELayout layout) {
+        prod.setLayout(layout);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder keyCount(int keyCount) {
+        prod.setKeyCount(keyCount);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder keycapMaterial(String keycapMaterial) {
+        prod.setKeycapMaterial(keycapMaterial);
+        return this;
+    }
+
+    @Override
+    public KeyboardBuilder batteryType(String batteryType) {
+        prod.setBatteryType(batteryType);
+        return this;
+    }
+
+    @Override
+    public MechanicalKeyboard build() {
+        return prod;
+    }
+}

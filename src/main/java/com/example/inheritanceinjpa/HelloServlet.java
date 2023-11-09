@@ -1,5 +1,6 @@
 package com.example.inheritanceinjpa;
 
+import com.example.inheritanceinjpa.builder.laptop.LaptopBuilder;
 import com.example.inheritanceinjpa.builder.laptop.LaptopBuilderImpl;
 import com.example.inheritanceinjpa.customenum.ECategory;
 import com.example.inheritanceinjpa.entity.Laptop;
@@ -9,14 +10,17 @@ import com.example.inheritanceinjpa.entity.Product;
 import com.example.inheritanceinjpa.repository.prod.ProdRepos;
 import com.example.inheritanceinjpa.repository.prod.ProdReposImpl;
 
-import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Locale;
+import java.util.List;
 import java.util.Set;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
@@ -41,6 +45,8 @@ public class HelloServlet extends HttpServlet {
         saveMonitor(out);
 
         getProductById(out);
+
+        getByPriceRange(out);
     }
 
     private void saveLaptop(PrintWriter out) {
@@ -58,7 +64,8 @@ public class HelloServlet extends HttpServlet {
     }
 
     private Laptop laptopBuilder() {
-        return new LaptopBuilderImpl()
+        LaptopBuilder builder = new LaptopBuilderImpl();
+        builder
                 .cpuName("Intel Core i5")
                 .cpuCores(4)
                 .cpuThreads(8)
@@ -90,8 +97,10 @@ public class HelloServlet extends HttpServlet {
                 .version("1.0")
                 .color("Silver")
                 .category(ECategory.LAPTOP)
-                .releaseYear(2022)
-                .build();
+                .releaseYear(2022);
+        Laptop laptop = builder.build();
+        builder = null;
+        return laptop;
     }
 
     private void saveMonitor(PrintWriter out) {
@@ -138,6 +147,26 @@ public class HelloServlet extends HttpServlet {
             out.println("Monitor");
         }
     }
+
+    void getByPriceRange(PrintWriter out) {
+        List<Product> prods = prodRepos.getByPriceRange(new BigDecimal(0), new BigDecimal(1_000_000));
+        if (prods.isEmpty()) {
+            out.println("Empty");
+            return;
+        }
+
+        for (Product prod : prods) {
+            if (prod instanceof Laptop) {
+                out.println("Laptop");
+            } else if (prod instanceof MechanicalKeyboard) {
+                out.println("MechanicalKeyboard");
+            } else {
+                out.println("Monitor");
+            }
+            out.println(prod.toString());
+        }
+    }
+
 
     public void destroy() {
     }

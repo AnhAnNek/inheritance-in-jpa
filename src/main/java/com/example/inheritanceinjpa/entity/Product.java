@@ -5,11 +5,12 @@ import com.example.inheritanceinjpa.customenum.ECategory;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "products")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Product {
+public abstract class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -57,6 +58,64 @@ public class Product {
         this.color = color;
         this.category = category;
         this.releaseYear = releaseYear;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", desc='" + desc + '\'' +
+                ", price=" + price +
+                ", stockQty=" + stockQty +
+                ", discountPercent=" + discountPercent +
+                ", version='" + version + '\'' +
+                ", color='" + color + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", category=" + category +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (Double.compare(discountPercent, product.discountPercent) != 0) return false;
+        if (releaseYear != product.releaseYear) return false;
+        if (!Objects.equals(id, product.id)) return false;
+        if (!Objects.equals(brand, product.brand)) return false;
+        if (!Objects.equals(model, product.model)) return false;
+        if (!Objects.equals(desc, product.desc)) return false;
+        if (!Objects.equals(price, product.price)) return false;
+        if (!Objects.equals(stockQty, product.stockQty)) return false;
+        if (!Objects.equals(version, product.version)) return false;
+        if (!Objects.equals(color, product.color)) return false;
+        if (category != product.category) return false;
+        return Objects.equals(cartItems, product.cartItems);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (brand != null ? brand.hashCode() : 0);
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        result = 31 * result + (desc != null ? desc.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (stockQty != null ? stockQty.hashCode() : 0);
+        temp = Double.doubleToLongBits(discountPercent);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + releaseYear;
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (cartItems != null ? cartItems.hashCode() : 0);
+        return result;
     }
 
     public Long getId() {

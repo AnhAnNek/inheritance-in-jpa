@@ -5,6 +5,7 @@ import com.example.inheritanceinjpa.customenum.ECategory;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -47,7 +48,7 @@ public class Monitor extends Product{
     private double powerConsumption;
     private double weight;
 
-    @ElementCollection(targetClass = EConnection.class)
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = EConnection.class)
     @CollectionTable(name = "monitor_connections", joinColumns = @JoinColumn(name = "monitor_id"))
     @Enumerated(EnumType.STRING)
     private Set<EConnection> connections;
@@ -91,18 +92,52 @@ public class Monitor extends Product{
                 ", powerConsumption=" + powerConsumption +
                 ", weight=" + weight +
                 ", connections=" + connections +
-                ", id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", desc='" + desc + '\'' +
-                ", price=" + price +
-                ", stockQty=" + stockQty +
-                ", discountPercent=" + discountPercent +
-                ", version='" + version + '\'' +
-                ", color='" + color + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", category=" + category +
+                ", superClass=" + super.toString() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Monitor monitor = (Monitor) o;
+
+        if (Double.compare(screenSize, monitor.screenSize) != 0) return false;
+        if (touchScreen != monitor.touchScreen) return false;
+        if (refreshRate != monitor.refreshRate) return false;
+        if (eyeCareTechnology != monitor.eyeCareTechnology) return false;
+        if (brightness != monitor.brightness) return false;
+        if (hdrSupported != monitor.hdrSupported) return false;
+        if (builtInSpeakers != monitor.builtInSpeakers) return false;
+        if (Double.compare(powerConsumption, monitor.powerConsumption) != 0) return false;
+        if (Double.compare(weight, monitor.weight) != 0) return false;
+        if (!Objects.equals(resolution, monitor.resolution)) return false;
+        if (panelType != monitor.panelType) return false;
+        return Objects.equals(connections, monitor.connections);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        long temp;
+        temp = Double.doubleToLongBits(screenSize);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (resolution != null ? resolution.hashCode() : 0);
+        result = 31 * result + (touchScreen ? 1 : 0);
+        result = 31 * result + (panelType != null ? panelType.hashCode() : 0);
+        result = 31 * result + refreshRate;
+        result = 31 * result + (eyeCareTechnology ? 1 : 0);
+        result = 31 * result + brightness;
+        result = 31 * result + (hdrSupported ? 1 : 0);
+        result = 31 * result + (builtInSpeakers ? 1 : 0);
+        temp = Double.doubleToLongBits(powerConsumption);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(weight);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (connections != null ? connections.hashCode() : 0);
+        return result;
     }
 
     public double getScreenSize() {

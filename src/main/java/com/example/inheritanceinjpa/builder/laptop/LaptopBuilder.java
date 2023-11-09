@@ -27,5 +27,4 @@ public interface LaptopBuilder extends ProductBuilder<Laptop> {
     LaptopBuilder weight(double weight);
     LaptopBuilder material(String material);
     LaptopBuilder operatingSystem(String operatingSystem);
-    Laptop build();
 }

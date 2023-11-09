@@ -1,9 +1,12 @@
 package com.example.inheritanceinjpa.entity;
 
+import com.example.inheritanceinjpa.builder.laptop.LaptopBuilder;
+import com.example.inheritanceinjpa.builder.laptop.LaptopBuilderImpl;
 import com.example.inheritanceinjpa.customenum.ECategory;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "laptops")
@@ -131,18 +134,76 @@ public class Laptop extends Product {
                 ", weight=" + weight +
                 ", material='" + material + '\'' +
                 ", operatingSystem='" + operatingSystem + '\'' +
-                ", id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", desc='" + desc + '\'' +
-                ", price=" + price +
-                ", stockQty=" + stockQty +
-                ", discountPercent=" + discountPercent +
-                ", version='" + version + '\'' +
-                ", color='" + color + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", category=" + category +
+                ", superClass=" + super.toString() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Laptop laptop = (Laptop) o;
+
+        if (cpuCores != laptop.cpuCores) return false;
+        if (cpuThreads != laptop.cpuThreads) return false;
+        if (Double.compare(cpuSpeed, laptop.cpuSpeed) != 0) return false;
+        if (Double.compare(cpuMaxSpeed, laptop.cpuMaxSpeed) != 0) return false;
+        if (cpuCache != laptop.cpuCache) return false;
+        if (ramSize != laptop.ramSize) return false;
+        if (ramBusSpeed != laptop.ramBusSpeed) return false;
+        if (ramMaxSupport != laptop.ramMaxSupport) return false;
+        if (romSize != laptop.romSize) return false;
+        if (Double.compare(screenSize, laptop.screenSize) != 0) return false;
+        if (screenRefreshRate != laptop.screenRefreshRate) return false;
+        if (brightness != laptop.brightness) return false;
+        if (antiGlare != laptop.antiGlare) return false;
+        if (Double.compare(weight, laptop.weight) != 0) return false;
+        if (!Objects.equals(cpuName, laptop.cpuName)) return false;
+        if (ramType != laptop.ramType) return false;
+        if (romType != laptop.romType) return false;
+        if (!Objects.equals(screenResolution, laptop.screenResolution))
+            return false;
+        if (!Objects.equals(screenTechnology, laptop.screenTechnology))
+            return false;
+        if (!Objects.equals(graphicsCard, laptop.graphicsCard))
+            return false;
+        if (!Objects.equals(material, laptop.material)) return false;
+        return Objects.equals(operatingSystem, laptop.operatingSystem);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        long temp;
+        result = 31 * result + (cpuName != null ? cpuName.hashCode() : 0);
+        result = 31 * result + cpuCores;
+        result = 31 * result + cpuThreads;
+        temp = Double.doubleToLongBits(cpuSpeed);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(cpuMaxSpeed);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + cpuCache;
+        result = 31 * result + ramSize;
+        result = 31 * result + (ramType != null ? ramType.hashCode() : 0);
+        result = 31 * result + ramBusSpeed;
+        result = 31 * result + ramMaxSupport;
+        result = 31 * result + (romType != null ? romType.hashCode() : 0);
+        result = 31 * result + romSize;
+        temp = Double.doubleToLongBits(screenSize);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (screenResolution != null ? screenResolution.hashCode() : 0);
+        result = 31 * result + screenRefreshRate;
+        result = 31 * result + (screenTechnology != null ? screenTechnology.hashCode() : 0);
+        result = 31 * result + brightness;
+        result = 31 * result + (antiGlare ? 1 : 0);
+        result = 31 * result + (graphicsCard != null ? graphicsCard.hashCode() : 0);
+        temp = Double.doubleToLongBits(weight);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (material != null ? material.hashCode() : 0);
+        result = 31 * result + (operatingSystem != null ? operatingSystem.hashCode() : 0);
+        return result;
     }
 
     public String getCpuName() {

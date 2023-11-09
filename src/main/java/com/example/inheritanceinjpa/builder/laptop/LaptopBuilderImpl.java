@@ -4,6 +4,7 @@ import com.example.inheritanceinjpa.builder.prod.ProductBuilderImpl;
 import com.example.inheritanceinjpa.entity.Laptop;
 
 public class LaptopBuilderImpl extends ProductBuilderImpl<Laptop> implements LaptopBuilder {
+
     public LaptopBuilderImpl() {
         prod = new Laptop();
     }

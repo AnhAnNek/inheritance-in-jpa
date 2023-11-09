@@ -4,6 +4,8 @@ import com.example.inheritanceinjpa.customenum.ECategory;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "mechanical_keyboards")
@@ -28,12 +30,16 @@ public class MechanicalKeyboard extends Product {
         ERGONOMIC
     }
 
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = ECompatibility.class)
+    @CollectionTable(name = "keyboard_compatibilities", joinColumns = @JoinColumn(name = "keyboard_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "compatibility")
-    private ECompatibility compatibility;
+    private Set<ECompatibility> compatibilities;
+
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = EConnection.class)
+    @CollectionTable(name = "keyboard_connections", joinColumns = @JoinColumn(name = "keyboard_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "connection_type")
-    private EConnection connectionType;
+    private Set<EConnection> connections;
+
     @Column(name = "cable_length")
     private String cableLength;
     @Column(name = "switch_type")
@@ -54,12 +60,12 @@ public class MechanicalKeyboard extends Product {
 
     public MechanicalKeyboard(String brand, String model, String desc, BigDecimal price, Integer stockQty,
                               double discountPercent, String version, String color, ECategory category,
-                              int releaseYear, ECompatibility compatibility, EConnection connectionType,
+                              int releaseYear, Set<ECompatibility> compatibilities, Set<EConnection> connections,
                               String cableLength, String switchType, ELayout layout, int keyCount,
                               String keycapMaterial, String batteryType) {
         super(brand, model, desc, price, stockQty, discountPercent, version, color, category, releaseYear);
-        this.compatibility = compatibility;
-        this.connectionType = connectionType;
+        this.compatibilities = compatibilities;
+        this.connections = connections;
         this.cableLength = cableLength;
         this.switchType = switchType;
         this.layout = layout;
@@ -71,42 +77,65 @@ public class MechanicalKeyboard extends Product {
     @Override
     public String toString() {
         return "MechanicalKeyboard{" +
-                "compatibility=" + compatibility +
-                ", connectionType=" + connectionType +
+                "compatibilities=" + compatibilities +
+                ", connections=" + connections +
                 ", cableLength='" + cableLength + '\'' +
                 ", switchType='" + switchType + '\'' +
                 ", layout=" + layout +
                 ", keyCount=" + keyCount +
                 ", keycapMaterial='" + keycapMaterial + '\'' +
                 ", batteryType='" + batteryType + '\'' +
-                ", id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", desc='" + desc + '\'' +
-                ", price=" + price +
-                ", stockQty=" + stockQty +
-                ", discountPercent=" + discountPercent +
-                ", version='" + version + '\'' +
-                ", color='" + color + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", category=" + category +
+                ", superClass=" + super.toString() +
                 '}';
     }
 
-    public ECompatibility getCompatibility() {
-        return compatibility;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        MechanicalKeyboard that = (MechanicalKeyboard) o;
+
+        if (keyCount != that.keyCount) return false;
+        if (compatibilities != that.compatibilities) return false;
+        if (connections != that.connections) return false;
+        if (!Objects.equals(cableLength, that.cableLength)) return false;
+        if (!Objects.equals(switchType, that.switchType)) return false;
+        if (layout != that.layout) return false;
+        if (!Objects.equals(keycapMaterial, that.keycapMaterial))
+            return false;
+        return Objects.equals(batteryType, that.batteryType);
     }
 
-    public void setCompatibility(ECompatibility compatibility) {
-        this.compatibility = compatibility;
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (compatibilities != null ? compatibilities.hashCode() : 0);
+        result = 31 * result + (connections != null ? connections.hashCode() : 0);
+        result = 31 * result + (cableLength != null ? cableLength.hashCode() : 0);
+        result = 31 * result + (switchType != null ? switchType.hashCode() : 0);
+        result = 31 * result + (layout != null ? layout.hashCode() : 0);
+        result = 31 * result + keyCount;
+        result = 31 * result + (keycapMaterial != null ? keycapMaterial.hashCode() : 0);
+        result = 31 * result + (batteryType != null ? batteryType.hashCode() : 0);
+        return result;
     }
 
-    public EConnection getConnectionType() {
-        return connectionType;
+    public Set<ECompatibility> getCompatibility() {
+        return compatibilities;
     }
 
-    public void setConnectionType(EConnection connectionType) {
-        this.connectionType = connectionType;
+    public void setCompatibilities(Set<ECompatibility> compatibilities) {
+        this.compatibilities = compatibilities;
+    }
+
+    public Set<EConnection> getConnectionType() {
+        return connections;
+    }
+
+    public void setConnections(Set<EConnection> connections) {
+        this.connections = connections;
     }
 
     public String getCableLength() {
