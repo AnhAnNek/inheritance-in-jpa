@@ -52,7 +52,9 @@ public class HelloServlet extends HttpServlet {
 
 //        getProductById(out);
 
-        getByPriceRange(out);
+//        getByPriceRange(out);
+
+        getByModel(out);
     }
 
     private void saveLaptop(PrintWriter out) {
@@ -209,6 +211,25 @@ public class HelloServlet extends HttpServlet {
 
     void getByPriceRange(PrintWriter out) {
         List<Product> prods = prodRepos.getByPriceRange(new BigDecimal(0), new BigDecimal(1_000_000));
+        if (prods.isEmpty()) {
+            out.println("Empty");
+            return;
+        }
+
+        for (Product prod : prods) {
+            if (prod instanceof Laptop) {
+                out.println("Laptop");
+            } else if (prod instanceof MechanicalKeyboard) {
+                out.println("MechanicalKeyboard");
+            } else {
+                out.println("Monitor");
+            }
+            out.println(prod.toString());
+        }
+    }
+
+    void getByModel(PrintWriter out) {
+        List<Product> prods = prodRepos.getProdsByModel("Model123");
         if (prods.isEmpty()) {
             out.println("Empty");
             return;

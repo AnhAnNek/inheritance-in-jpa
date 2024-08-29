@@ -9,5 +9,7 @@ import java.util.List;
 public interface ProdRepos extends BaseRepos<Product, Long> {
     Product update(Product prod);
     List<Product> getByPriceRange(BigDecimal startPrice, BigDecimal endPrice);
+
+    List<Product> getProdsByModel(String model);
 }
 

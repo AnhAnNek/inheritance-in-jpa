@@ -8,23 +8,28 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"model", "version", "price", "color", "stock_qty", "discount_percent"})
+})
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @Column(nullable = false)
     protected String brand;
 
+    @Column(nullable = false)
     protected String model;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     protected String desc;
 
+    @Column(nullable = false)
     protected BigDecimal price;
 
-    @Column(name = "stock_qty")
+    @Column(name = "stock_qty", nullable = false)
     protected Integer stockQty;
 
     @Column(name = "discount_percent")

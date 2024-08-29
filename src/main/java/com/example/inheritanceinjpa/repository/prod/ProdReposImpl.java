@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,12 +46,25 @@ public class ProdReposImpl extends BaseReposImpl<Product, Long> implements ProdR
 
     @Override
     public List<Product> getByPriceRange(BigDecimal startPrice, BigDecimal endPrice) {
-        return getResultList(em -> {
-            String sqlStr = "SELECT p FROM Product p WHERE p.price >= :startPrice AND p.price <= :endPrice";
-            TypedQuery<Product> typedQuery = em.createQuery(sqlStr, Product.class);
-            typedQuery.setParameter("startPrice", startPrice);
-            typedQuery.setParameter("endPrice", endPrice);
-            return typedQuery;
-        });
+        return new ArrayList<>();
+//        return getResultList(em -> {
+//            String sqlStr = "SELECT p FROM Product p WHERE p.price >= :startPrice AND p.price <= :endPrice";
+//            TypedQuery<Product> typedQuery = em.createQuery(sqlStr, Product.class);
+//            typedQuery.setParameter("startPrice", startPrice);
+//            typedQuery.setParameter("endPrice", endPrice);
+//            return typedQuery;
+//        });
+    }
+
+    @Override
+    public List<Product> getProdsByModel(String model) {
+        return new ArrayList<>();
+//        return getResultList(em -> {
+//            String sqlStr = "SELECT p FROM Product p WHERE p.model LIKE :model";
+//            String sqlStr = "SELECT p FROM Product p";
+//            TypedQuery<Product> typedQuery = em.createQuery(sqlStr, Product.class);
+//            typedQuery.setParameter("model", model);
+//            return typedQuery;
+//        });
     }
 }

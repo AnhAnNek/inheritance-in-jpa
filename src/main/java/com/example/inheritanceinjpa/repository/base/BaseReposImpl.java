@@ -28,9 +28,9 @@ public abstract class BaseReposImpl<T, ID> implements BaseRepos<T, ID> {
         EntityTransaction trans = em.getTransaction();
         try {
             trans.begin();
-            em.persist(entity);
+            T savedEntity = em.merge(entity);
             trans.commit();
-            return entity;
+            return savedEntity;
         } catch (Exception e) {
             log.log(Level.SEVERE, e.getMessage());
             trans.rollback();
